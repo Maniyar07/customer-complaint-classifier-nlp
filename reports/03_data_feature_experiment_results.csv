@@ -1,0 +1,4 @@
+text_version,max_features,min_samples_per_class,num_rows,num_classes,accuracy,macro_f1,weighted_f1
+clean_text,30000,50,20874,8,0.818683,0.737771,0.822284
+clean_text,20000,50,20874,8,0.817006,0.737756,0.821066
+clean_text,10000,50,20874,8,0.811976,0.727386,0.81677

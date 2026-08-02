@@ -1,0 +1,11 @@
+{
+    "best_text_version": "clean_text",
+    "best_max_features": 30000,
+    "min_samples_per_class": 50,
+    "accuracy": 0.818683,
+    "macro_f1": 0.737771,
+    "weighted_f1": 0.822284,
+    "num_rows": 20874,
+    "num_classes": 8,
+    "algorithm": "LogisticRegression"
+}

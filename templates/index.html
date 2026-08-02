@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Complaint Classifier</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">NLP</div>
+            <div>
+                <h2>Complaint AI</h2>
+                <p>Classification System</p>
+            </div>
+        </div>
+
+        <div class="side-card">
+            <p class="side-label">Model</p>
+            <h3>TF-IDF + Logistic Regression</h3>
+        </div>
+
+        <div class="side-card">
+            <p class="side-label">Backend Status</p>
+            <h3 id="apiStatus">Checking...</h3>
+        </div>
+
+        <nav class="nav-links">
+            <a href="#predict">Prediction</a>
+            <a href="#metrics">Model Metrics</a>
+            <a href="#reports">Reports</a>
+            <a href="#about">Project Info</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Hero -->
+        <section class="hero">
+            <div>
+                <span class="eyebrow">NLP Machine Learning Project</span>
+                <h1>Customer Complaint Classification</h1>
+                <p>
+                    A professional NLP web application that predicts the category of a customer complaint
+                    using a trained machine learning model and real-time Flask API.
+                </p>
+            </div>
+
+            <div class="hero-badge">
+                <span>Live</span>
+                <strong>Prediction API</strong>
+            </div>
+        </section>
+
+        <!-- Metrics -->
+        <section class="metric-grid" id="metrics">
+            <div class="metric-card">
+                <p>Accuracy</p>
+                <h2 id="accuracy">--</h2>
+            </div>
+
+            <div class="metric-card">
+                <p>Macro F1</p>
+                <h2 id="macroF1">--</h2>
+            </div>
+
+            <div class="metric-card">
+                <p>Weighted F1</p>
+                <h2 id="weightedF1">--</h2>
+            </div>
+
+            <div class="metric-card">
+                <p>Training Rows</p>
+                <h2 id="trainingRows">--</h2>
+            </div>
+        </section>
+
+        <!-- Prediction Section -->
+        <section class="content-grid" id="predict">
+
+            <div class="panel prediction-panel">
+                <div class="section-heading">
+                    <span>01</span>
+                    <div>
+                        <h2>Predict Complaint Category</h2>
+                        <p>Enter complaint text and get predicted category with confidence score.</p>
+                    </div>
+                </div>
+
+                <textarea id="complaintText" placeholder="Example: Money was debited from my bank account without my permission and the bank is not resolving my issue..."></textarea>
+
+                <div class="action-row">
+                    <button id="predictBtn">Predict Category</button>
+                    <button class="secondary-btn" id="clearBtn">Clear</button>
+                </div>
+
+                <div id="errorBox" class="error-box hidden"></div>
+
+                <div id="predictionResult" class="prediction-result hidden">
+                    <p>Predicted Category</p>
+                    <h2 id="predictedCategory">--</h2>
+                </div>
+            </div>
+
+            <div class="panel sample-panel">
+                <div class="section-heading small-heading">
+                    <span>02</span>
+                    <div>
+                        <h2>Try Sample</h2>
+                        <p>Use ready examples for quick testing.</p>
+                    </div>
+                </div>
+
+                <select id="sampleSelect">
+                    <option value="">Choose a sample complaint</option>
+                    <option value="I am receiving repeated calls from a debt collector for a debt that I do not recognize.">Debt collection issue</option>
+                    <option value="My credit card was charged with an unknown transaction and the bank is not resolving my issue.">Credit card issue</option>
+                    <option value="Money was debited from my checking account without my permission.">Bank account issue</option>
+                    <option value="My mortgage payment was applied incorrectly and I am being charged extra fees.">Mortgage issue</option>
+                    <option value="The lender is showing incorrect balance on my vehicle loan account.">Vehicle loan issue</option>
+                    <option value="My student loan payment was not updated even after successful payment.">Student loan issue</option>
+                </select>
+
+                <button class="secondary-btn full-btn" id="useSampleBtn">Use Sample</button>
+
+                <div class="confidence-box">
+                    <h3>Confidence Scores</h3>
+                    <div id="confidenceList">
+                        <p class="muted">Prediction confidence will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Reports -->
+        <section class="panel reports-panel" id="reports">
+            <div class="section-heading">
+                <span>03</span>
+                <div>
+                    <h2>Model Reports</h2>
+                    <p>Classification report and project analysis outputs.</p>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="classification">Classification Report</button>
+                <button class="tab-btn" data-tab="charts">EDA Charts</button>
+                <button class="tab-btn" data-tab="experiments">Experiment Results</button>
+            </div>
+
+            <div class="tab-content active" id="classification">
+                <div class="table-wrap">
+                    <table id="classificationTable">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-content" id="charts">
+                <div class="chart-grid">
+                    <div class="chart-card">
+                        <h3>Top 15 Categories</h3>
+                        <img src="{{ url_for('report_image', filename='top_15_categories.png') }}" alt="Top 15 Categories">
+                    </div>
+
+                    <div class="chart-card">
+                        <h3>Complaint Word Count Distribution</h3>
+                        <img src="{{ url_for('report_image', filename='complaint_word_count_distribution.png') }}" alt="Word Count Distribution">
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="experiments">
+                <div class="table-wrap">
+                    <table id="experimentTable">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="panel about-panel" id="about">
+            <div class="section-heading">
+                <span>04</span>
+                <div>
+                    <h2>Project Architecture</h2>
+                    <p>Clean frontend connected with Flask backend and trained NLP model.</p>
+                </div>
+            </div>
+
+            <div class="architecture-grid">
+                <div>
+                    <h3>Frontend</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                </div>
+
+                <div>
+                    <h3>Backend</h3>
+                    <p>Flask REST API</p>
+                </div>
+
+                <div>
+                    <h3>NLP Features</h3>
+                    <p>TF-IDF Vectorization</p>
+                </div>
+
+                <div>
+                    <h3>Model</h3>
+                    <p>Logistic Regression Classifier</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            Customer Complaint Classification System · NLP Machine Learning Project
+        </footer>
+
+    </main>
+</div>
+
+<!-- JavaScript -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

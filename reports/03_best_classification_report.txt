@@ -1,0 +1,26 @@
+Best Experiment
+text_version             clean_text
+max_features                  30000
+min_samples_per_class            50
+num_rows                      20874
+num_classes                       8
+accuracy                   0.818683
+macro_f1                   0.737771
+weighted_f1                0.822284
+Name: 0, dtype: object
+
+Classification Report
+                                                                              precision    recall  f1-score   support
+
+                                                 Checking or savings account       0.88      0.86      0.87      1187
+                                                 Credit card or prepaid card       0.90      0.83      0.86      1420
+Credit reporting, credit repair services, or other personal consumer reports       0.61      0.66      0.63       406
+                                                             Debt collection       0.51      0.60      0.55       186
+                          Money transfer, virtual currency, or money service       0.58      0.71      0.64       171
+                                                                    Mortgage       0.91      0.92      0.91       649
+                                                                Student loan       0.73      0.68      0.70        28
+                                                       Vehicle loan or lease       0.66      0.82      0.73       128
+
+                                                                    accuracy                           0.82      4175
+                                                                   macro avg       0.72      0.76      0.74      4175
+                                                                weighted avg       0.83      0.82      0.82      4175
